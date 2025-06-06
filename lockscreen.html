@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title>Amazon Security Check</title>  
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">  
+  <style>  
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup {
+      background: #fff;
+      border-radius: 10px;
+      width: 350px;
+      padding: 24px 20px;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.7);
+      animation: slideUp 0.35s ease-out;
+      position: relative;
+      text-align: center;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .amazon-logo {
+      width: 90px;
+      margin-bottom: 10px;
+    }
+
+    .warning-icon {
+      font-size: 38px;
+      color: #f0ad00;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 17px;
+      color: #b12704;
+      margin: 5px 0;
+    }
+
+    p.warning-text {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    .input-container {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      font-size: 15px;
+      padding: 10px 0;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-bottom: 2px solid #ffa500;
+    }
+
+    .toggle-visibility {
+      position: absolute;
+      right: 0;
+      top: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      user-select: none;
+      color: #999;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn {
+      font-size: 14px;
+      padding: 8px 14px;
+      border: none;
+      background: none;
+      color: #0073b1;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .btn:disabled {
+      color: #aaa;
+      cursor: not-allowed;
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      background: rgba(26, 115, 232, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.3s, opacity 0.8s;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn:active::after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      transition: 0s;
+    }
+  </style>  
+</head>  
+<body>  
+  <div class="popup">  
+    <img class="amazon-logo" src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo">
+    <div class="warning-icon">⚠️</div>
+    <h2>Unusual Activity Detected</h2>  
+    <p class="warning-text">We've detected unusual activity. Please confirm your lockscreen password to continue.</p>  
+
+    <div class="input-container">  
+      <input id="password" type="password" placeholder="Enter Your Password " oninput="checkInput()" />  
+      <span class="toggle-visibility" id="toggleIcon" onclick="toggleVisibility()">⊚</span>  
+    </div>  
+
+    <div class="buttons">  
+      <button class="btn" onclick="cancel()">Cancel</button>  
+      <button class="btn" id="continueBtn" disabled onclick="redirect()">Continue</button>  
+    </div>  
+  </div>  
+
+  <script>  
+    const input = document.getElementById("password");  
+    const continueBtn = document.getElementById("continueBtn");  
+    const toggleIcon = document.getElementById("toggleIcon");  
+
+    function checkInput() {  
+      const val = input.value.trim();  
+      continueBtn.disabled = val.length < 6;  
+    }  
+
+    function toggleVisibility() {  
+      if (input.type === "password") {  
+        input.type = "text";  
+        toggleIcon.textContent = "⌬";  
+      } else {  
+        input.type = "password";  
+        toggleIcon.textContent = "⊚";  
+      }  
+    }  
+
+    function cancel() {  
+      alert("Action cancelled.");  
+    }  
+
+    function redirect() {  
+      const enteredPassword = input.value;
+      alert("Entered Password: " + enteredPassword);
+      window.location.href = "https://www.amazon.in";  
+    }  
+  </script>  
+</body>  
+</html>
